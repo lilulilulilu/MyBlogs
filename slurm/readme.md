@@ -1,0 +1,1 @@
+[slurm](https://www.run.ai/guides/slurm/understanding-slurm-gpu-management)

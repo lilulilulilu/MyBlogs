@@ -1,0 +1,99 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-mysql
+spec:
+  capacity:
+    storage: 10Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/data/mysql
+# PersistentVolume (PV) 定义了一个 10Mi 的存储卷，使用 hostPath 指定了在主机上的路径 /mnt/data/mysql。
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Mi
+# PersistentVolumeClaim (PVC) 请求了一个 10Mi 的存储卷，匹配到上面定义的 PV。
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  my.cnf: |
+    [mysqld]
+    bind-address = 0.0.0.0
+    default_storage_engine = InnoDB
+    sql_mode = NO_ENGINE_SUBSTITUTION 
+# ConfigMap 定义了一个 MySQL 的配置文件 my.cnf，将绑定地址设置为 0.0.0.0，以允许所有 IP 访问。
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  ports:
+    - port: 3306
+  clusterIP: None
+  selector:
+    app: mysql
+#  Service 定义了一个 MySQL 服务，使用 clusterIP: None 使其成为一个 Headless Service，以便 StatefulSet 的 Pod 可以通过固定的 DNS 名称访问 
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  serviceName: "mysql"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3306
+          name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: rootpassword
+        volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql
+        - name: mysql-config
+          mountPath: /etc/mysql/conf.d
+          subPath: my.cnf
+      volumes:
+      - name: mysql-config
+        configMap:
+          name: mysql-config
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Mi
+# StatefulSet 定义了一个有状态集，包含三个副本。
+# Pod 模板中定义了 MySQL 容器，暴露 3306 端口，使用环境变量设置 MySQL 的根密码。
+# VolumeClaimTemplates 定义了一个持久化存储模板，所有副本将使用 PVC 请求的存储卷。
