@@ -45,7 +45,7 @@ metadata:
 spec:
   ports:
     - port: 3306
-  clusterIP: None
+  clusterIP: None # 使其成为一个 Headless Service，以便 StatefulSet 的 Pod 可以通过固定的 DNS 名称访问
   selector:
     app: mysql
 #  Service 定义了一个 MySQL 服务，使用 clusterIP: None 使其成为一个 Headless Service，以便 StatefulSet 的 Pod 可以通过固定的 DNS 名称访问 

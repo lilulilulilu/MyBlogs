@@ -1,3 +1,6 @@
 [submodule "terraform/terraform/learn-terraform-resources"]
 	path = terraform/terraform/learn-terraform-resources
 	url = https://github.com/hashicorp/learn-terraform-resources.git
+[submodule "Infra"]
+	path = Infra
+	url = https://github.com/lilulilulilu/Infra.git

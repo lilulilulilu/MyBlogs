@@ -1,6 +1,6 @@
 
 
-**git删除大文件** 
+## git删除大文件
 ```
 brew install git-lfs
 git lfs install
@@ -18,3 +18,10 @@ git rev-list --objects --all | grep $(git verify-pack -v .git/objects/pack/pack-
 git filter-repo --invert-paths --path "filepath" --force
 git push --set-upstream https://github.com/lilulilulilu/python-notes.git main
 ```
+
+## add submodule
+```
+git submodule add https://github.com/hashicorp/learn-terraform-resources.git terraform/learn-terraform-resources
+```
+
+git submodule add https://github.com/lilulilulilu/Infra.git Infra
