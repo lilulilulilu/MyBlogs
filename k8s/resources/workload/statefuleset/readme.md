@@ -25,3 +25,4 @@ StatefulSet 是 Kubernetes 中的一种工作负载 API 对象，专为管理有
 以下是一个使用 StatefulSet 部署 MySQL 数据库的示例，示例包括定义 PersistentVolume、PersistentVolumeClaim、ConfigMap、Service 和 StatefulSet。
 
 [使用 StatefulSet 部署 MySQL](StatefulSet.yaml)
+
