@@ -4,3 +4,6 @@
 [submodule "Infra"]
 	path = Infra
 	url = https://github.com/lilulilulilu/Infra.git
+[submodule "AI/mcp-demo"]
+	path = AI/mcp-demo
+	url = https://github.com/lilulilulilu/mcp-demo.git
