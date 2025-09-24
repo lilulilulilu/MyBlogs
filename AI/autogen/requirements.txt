@@ -1,0 +1,12 @@
+autogen
+autogen-agentchat
+autogen-ext[openai]
+autogenstudio
+yfinance 
+matplotlib 
+pytz 
+numpy 
+pandas 
+python-dotenv 
+requests 
+bs4

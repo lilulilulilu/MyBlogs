@@ -1,0 +1,18 @@
+[project]
+name = "autogen-getting-started"
+version = "0.1.0"
+description = "a autogen example package"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]",
+    "openai",
+    "gradio",
+    "autogen-agentchat",
+    "autogen-ext[openai]",
+    "autogen-ext[mcp]",
+    "autogen-ext[gradio]",
+    "autogenstudio",
+    "gradio",
+    "python-dotenv"
+]
