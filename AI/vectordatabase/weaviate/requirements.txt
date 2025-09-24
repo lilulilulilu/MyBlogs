@@ -1,0 +1,10 @@
+weaviate-client>=3.26.7,<4.0.0
+langchain-weaviate 
+langchain-community 
+langchain-ollama 
+langchain-text-splitters
+langchain-dashscope
+
+langchain-milvus
+langchain-openai
+
