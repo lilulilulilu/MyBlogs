@@ -1,0 +1,9 @@
+mcp[cli]
+openai
+gradio
+autogen-agentchat
+autogen-ext[openai]
+autogen-ext[mcp]
+autogen-ext[gradio]
+gradio
+python-dotenv 
