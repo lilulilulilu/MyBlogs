@@ -2,9 +2,12 @@ langchain_community
 langchain
 langchain_core
 langchain_openai
-langchain_community
-langchain_community
 pypdf
 langchain-milvus
 pymilvus[milvus_lite]
 langchain-ollama
+gradio
+python-dotenv
+autogen-agentchat
+autogen-core
+autogen-ext

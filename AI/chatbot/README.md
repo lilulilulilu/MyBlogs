@@ -1,16 +1,64 @@
-# 技术栈
-1. langchain：ai框架
-2. weaviate：充当向量数据库
-3. qwen：llm模型
+# 智能聊天机器人
 
-# milvus
-| index\_type              | metric\_type     | 精确/近似   | 搜索类型  | 查询时间复杂度                  | 说明                        |
-| ------------------------ | ---------------- | ------- | ----- | ------------------------ | ------------------------- |
-| **FLAT**                 | L2 / IP / COSINE | 精确      | 最近邻   | O(N·d)                   | 暴力线性扫描，结果 100% 精确，适合小规模数据 |
-| **IVF\_FLAT**            | L2 / IP / COSINE | 近似      | 最近邻   | O(log N + (N/nlist)·d)   | 聚类倒排索引 + 桶内扫描，速度快，召回率略低   |
-| **IVF\_PQ**              | L2 / IP / COSINE | 近似      | 最近邻   | O(log N + (N/nlist)·d/q) | 倒排 + 乘积量化，内存小，速度快，精度略低    |
-| **IVF\_SQ8**             | L2 / IP / COSINE | 近似      | 最近邻   | O(log N + (N/nlist)·d)   | 倒排 + 8bit 量化，适合大规模向量库     |
-| **HNSW**                 | L2 / IP / COSINE | 近似      | 最近邻   | O(log N) \~ O(log² N)    | 基于图的 ANN，召回率高，查询快，内存大     |
-| **Annoy**                | L2 / IP / COSINE | 近似      | 最近邻   | O(log N)                 | 基于随机投影树，适合静态数据集           |
-| **DISKANN**              | L2 / IP / COSINE | 近似      | 最近邻   | O(log N)                 | 磁盘 ANN，超大规模向量库，内存低        |
-| **倒排索引 (Elasticsearch)** | -                | 精确 / 近似 | 关键字搜索 | O(log N)                 | 字符串匹配，不是向量检索              |
+基于Gradio和LangChain的智能聊天机器人，支持文件上传和知识库检索。
+
+## 功能特性
+
+- 📁 **文件上传**: 支持PDF、TXT、DOCX格式文件上传
+- 🧠 **向量存储**: 使用Milvus向量数据库存储文档
+- 💬 **智能对话**: 基于Ollama LLM的智能对话
+- 🔍 **知识库检索**: 自动从上传的文档中检索相关信息
+- 🎨 **现代界面**: 基于Gradio的美观用户界面
+
+## 安装依赖
+
+```bash
+pip install -r requirements.txt
+```
+
+## 运行应用
+
+### 方法1: 使用启动脚本
+```bash
+./run_app.sh
+```
+
+### 方法2: 直接运行
+```bash
+cd src
+python app.py
+```
+
+## 使用说明
+
+1. **上传文件**: 在左侧面板选择并上传PDF、TXT或DOCX文件
+2. **开始对话**: 在右侧聊天窗口输入问题
+3. **智能回答**: AI会根据上传的文档内容智能回答你的问题
+
+## 技术架构
+
+- **前端**: Gradio
+- **LLM**: Ollama (llama3.2:latest)
+- **向量数据库**: Milvus
+- **文档处理**: LangChain
+- **嵌入模型**: Ollama (embeddinggemma:latest)
+
+## 文件结构
+
+```
+chatbot/
+├── src/
+│   ├── app.py          # 主应用文件
+│   ├── store.py        # Milvus存储类
+│   └── load_data.py    # 文档加载和分割
+├── files/              # 上传文件存储目录
+├── requirements.txt    # 依赖列表
+└── run_app.sh         # 启动脚本
+```
+
+## 注意事项
+
+- 确保Ollama服务正在运行
+- 首次运行时会创建Milvus数据库文件
+- 支持的文件格式: PDF, TXT, DOCX
+- 默认端口: 7860
